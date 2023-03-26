@@ -23,7 +23,7 @@ angular.module('music',
                 controller: 'Login'
               }
             }
-          })
+		  })
           .state('tag', {
             url: '/album/:id/tag',
             views: {
@@ -254,6 +254,15 @@ angular.module('music',
               'user': {
                 templateUrl: 'partial/settings.user.edit.html',
                 controller: 'SettingsUserEdit'
+              }
+            }
+		  })
+		.state('register', {
+            url: '/register',
+            views: {
+              'page': {
+                templateUrl: 'partial/myregister.html',
+                controller: 'MyRegister'
               }
             }
           })
