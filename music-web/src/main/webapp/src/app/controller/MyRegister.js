@@ -37,28 +37,7 @@ angular.module('music').controller('MyRegister', function($scope, $dialog, $stat
     }
     
     promise.then(function() {
-      $scope.loadUsers();
-      $state.transitionTo('main.settingsuser');
-    });
-  };
-
-  /**
-   * Delete the current user.
-   */
-  $scope.remove = function () {
-    var title = 'Delete user';
-    var msg = 'Do you really want to delete this user?';
-    var btns = [{result:'cancel', label: 'Cancel'}, {result:'ok', label: 'OK', cssClass: 'btn-primary'}];
-
-    $dialog.messageBox(title, msg, btns, function(result) {
-      if (result == 'ok') {
-        Restangular.one('user', $stateParams.username).remove().then(function() {
-          $scope.loadUsers();
-          $state.transitionTo('main.settingsuser');
-        }, function () {
-          $state.transitionTo('main.settingsuser');
-        });
-      }
+      $state.transitionTo('login');
     });
   };
 
