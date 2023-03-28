@@ -63,12 +63,75 @@ public class UserResource extends BaseResource {
 			@FormParam("locale") String localeId,
 			@FormParam("email") String email) {
 
-		// if (!authenticate()) {
-		// throw new ForbiddenClientException();
-		// }
-		// checkPrivilege(Privilege.ADMIN);
+		if (!authenticate()) {
+			throw new ForbiddenClientException();
+		}
+		checkPrivilege(Privilege.ADMIN);
 
 		// Validate the input data
+		username = Validation.length(username, "username", 3, 50);
+		Validation.alphanumeric(username, "username");
+		password = Validation.length(password, "password", 8, 50);
+		email = Validation.length(email, "email", 3, 50);
+		Validation.email(email, "email");
+
+		// Create the user
+		User user = new User();
+		user.setRoleId(Constants.DEFAULT_USER_ROLE);
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setEmail(email);
+		user.setCreateDate(new Date());
+
+		if (localeId == null) {
+			// Set the locale from the HTTP headers
+			localeId = LocaleUtil.getLocaleIdFromAcceptLanguage(request.getHeader("Accept-Language"));
+		}
+		user.setLocaleId(localeId);
+
+		// Create the user
+		UserDao userDao = new UserDao();
+		String userId = null;
+		try {
+			userId = userDao.create(user);
+		} catch (Exception e) {
+			if ("AlreadyExistingUsername".equals(e.getMessage())) {
+				throw new ServerException("AlreadyExistingUsername", "Login already used", e);
+			} else {
+				throw new ServerException("UnknownError", "Unknown Server Error", e);
+			}
+		}
+
+		// Create the default playlist for this user
+		Playlist playlist = new Playlist();
+		playlist.setUserId(userId);
+		Playlist.createPlaylist(playlist);
+
+		// Raise a user creation event
+		UserCreatedEvent userCreatedEvent = new UserCreatedEvent();
+		userCreatedEvent.setUser(user);
+		AppContext.getInstance().getAsyncEventBus().post(userCreatedEvent);
+
+		return okJson();
+	}
+
+	/**
+	 * Creates a new user.
+	 * 
+	 * @param username User's username
+	 * @param password Password
+	 * @param email    E-Mail
+	 * @param localeId Locale ID
+	 * @return Response
+	 */
+	@PUT
+	@Path("regNew")
+	public Response registerNew(
+			@FormParam("username") String username,
+			@FormParam("password") String password,
+			@FormParam("locale") String localeId,
+			@FormParam("email") String email) {
+
 		username = Validation.length(username, "username", 3, 50);
 		Validation.alphanumeric(username, "username");
 		password = Validation.length(password, "password", 8, 50);

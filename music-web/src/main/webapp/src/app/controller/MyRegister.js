@@ -32,7 +32,7 @@ angular.module('music').controller('MyRegister', function($scope, $dialog, $stat
       .post('', $scope.user);
     } else {
       promise = Restangular
-      .one('user')
+      .one('user/regNew')
       .put($scope.user);
     }
     

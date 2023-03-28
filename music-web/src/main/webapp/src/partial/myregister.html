@@ -2,7 +2,7 @@
 
 <div ng-show="user || !isEdit()">
   <h4 ng-show="isEdit()">Edit "{{ user.username }}"</h4>
-  <h4 ng-show="!isEdit()">AddDD user</h4>
+  <h4 ng-show="!isEdit()">Create an account</h4>
   <form class="form-horizontal" name="editUserForm" novalidate ng-click="editUserForm.submitted = true">
     <div class="form-group" ng-class="{ 'has-error': !editUserForm.username.$valid && editUserForm.submitted, success: editUserForm.username.$valid }">
       <label class="col-sm-2 control-label" for="inputUsername">Username</label>
