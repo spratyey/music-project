@@ -23,6 +23,8 @@ import com.sismics.rest.exception.ClientException;
 import com.sismics.rest.exception.ForbiddenClientException;
 import com.sismics.rest.exception.ServerException;
 import com.sismics.rest.util.Validation;
+import com.sismics.rest.util.UnvalUser;
+import com.sismics.rest.util.UserValidation;
 import com.sismics.security.UserPrincipal;
 import com.sismics.util.LocaleUtil;
 import com.sismics.util.filter.TokenBasedSecurityFilter;
@@ -132,11 +134,16 @@ public class UserResource extends BaseResource {
 			@FormParam("locale") String localeId,
 			@FormParam("email") String email) {
 
-		username = Validation.length(username, "username", 3, 50);
-		Validation.alphanumeric(username, "username");
-		password = Validation.length(password, "password", 8, 50);
-		email = Validation.length(email, "email", 3, 50);
-		Validation.email(email, "email");
+		UnvalUser unvalUser = new UnvalUser();
+		unvalUser.setUsername(username);
+		unvalUser.setPassword(password);
+		unvalUser.setEmail(email);
+		UserValidation.validate(unvalUser);
+		System.out.println("VALIDATED");
+
+		username = unvalUser.getUsername();
+		password = unvalUser.getPassword();
+		email = unvalUser.getEmail();
 
 		// Create the user
 		User user = new User();
