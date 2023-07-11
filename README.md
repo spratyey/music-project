@@ -1,82 +1,38 @@
+# Music
+- Software Engineering Course Project, Spring 2023
+- Team Members: `Abhijith Anil`, `Jatin Agarwala`, `Pratyay Suvarnapathaki`, `Sneha Raghava Raju`, `Yash Mehan`
 
-# Music - Project 1 
+## Project Description
+Course project, with the aim of to applying the concepts learned in class to improve an existing software system, [Music by Sismics](https://github.com/sismics/music).
 
-Welcome to the first project! This project on the Music app by Sismics. The original repository can be found [here](https://github.com/sismics/music). 
+---
 
-**Do not modify this README. Use the [docs](/docs/) directory for anything you might want to submit**
+## Part One: Reverse Engineering and Refactoring
+**Documentation at `/docs/part1.pdf` and `/docs/part1_extras.pdf`**
 
-## What is Music?
+1. Analysed the existing codebase using UML diagrams, OOP Principles and SWOT Analysis for the classes comprising the following four subsystems:
+- User management 
+- Library management
+- Last.fm integration
+- Administrator features
 
-Music is an open source, Web-based music server.
+2. Identified software design smells, and the corresponding code smells for each subsystem. Tools used: SonarQube, Designite.
 
-Music is written in Java, and may be run on any operating system with Java support. We will be working with the web application of Music. 
+3. Proposed and idenitified code metrics to quantify the impact and technical debt incurred by the code smells. Tools used: PMD, CheckStyle.
 
-## Requirements 
-Music requires JDK 8, Maven 3 and npm to run. We recommend working with a Linux or Unix-based OS. 
+4. Proposed and implemented improvements to the codebase, to remove the code smells and improve the code quality. Analysed impact via updated metrics. Tools used: IntelliJ IDEA.
 
-Below are the instructions for installing the requirements on Ubuntu (and most Debian-based operating systems). 
+Extras: Analysed the stateful behavior of the system using the Transition Systems Model proposed by Prof. Venkatesh Choppella et. al. in their [AlgoDynamics](https://algodynamics.gitlab.io/) approach. Also, proposed a hypothetical automated refactoring pipeline using search-based and ML techniques.
 
-```
-sudo apt install openjdk-8-jdk
-sudo apt install maven
-sudo apt install npm
-```
+---
 
-If you're using Mac, Windows, or any other OS, and need any help, feel free to contact us. 
+## Part Two: Feature Additions and Design Patterns
+**Documentation at `/docs/part2.pdf` and `/docs/part2_extra.pdf`**
 
-## Changing Java Version
-You will need two versions of Java to work on this project (1.8 and 11). Music requires Java 1.8 and Sonarqube requires Java 11. So you will have to change Java versions for working on different parts.
+1. Better User Management: Improved the UX and DevEx of the login system, allowing the creation of new users directly from the login page, with the scope for alternate login methods in the future. Design pattern used: Chain of Responsibility.
 
-### For Globally Changing Java Version (Only on Ubuntu) 
-* Run the following command and select the version of Java you want to use.
-  ```
-  sudo update-alternatives --config java
-  ```
-* Similarly for javac.
-  ```
-  sudo update-alternatives --config javac
-  ```
-> Make sure you set the same version for both.  
+2. Better Library Management: Added the ability to mark playlists and individual tracks as public or private, and to share public playlists with other users. Design pattern used: DAO.
 
-### For Updating in Specific Runtime  (Mac & Linux)
-* **We recommend this method**
-* Instead of globally updating your Java version, it is better to temporarily change the Java version i.e. for as long as the terminal is open.
-* This is done by setting the path variable JAVA_HOME to the version of Java you want to use (1.8 for music and 11 for Sonarqube).
-* The command would be ```export JAVA_HOME=<path to java installation>``` for Mac and Linux.
+3. Online Integration: Added the ability to search for tracks on Soptify and LastFm, and to add them to the library. Also integrated Spotify and LastFm recommendation functionality based on existing playlist contents. Design pattern used: Design pattern used: Strategy.
 
-> The paths mentioned here are only sample paths. Make sure you find out the actual path for your JDK and use that.
-
-
-**On Mac**  
-The command would look something like this - 
-```
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_321.jdk/Contents/Home/
-```
-
-**On Linux**  
-The command would look something like this -  
-```
-export JAVA_HOME=/usr/lib/jvm/<jdk-version-something>
-```
-
-
-**On Windows**  
-Windows users, this is your cross to bear. [Here's](https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html) a guide that might be of use. Again, feel free to contact us for any help.  
- 
-
-## Building the project  
-
-Build the project from the root directory using:
-
-```
-mvn clean -DskipTests install  
-```
-
-
-You can then launch the web application from the ```music-web``` directory using  
-```
-mvn jetty:run
-``` 
-
-This launches the application on ```localhost:8080/music-web/src/``` by default. Feel to play around from here!   
-
+Extra: Added collaborative playlists, allowing multiple users to add tracks to a playlist.
