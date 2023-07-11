@@ -11,10 +11,10 @@ Course project, with the aim of to applying the concepts learned in class to imp
 **Documentation at `/docs/part1.pdf` and `/docs/part1_extras.pdf`**
 
 1. Analysed the existing codebase using UML diagrams, OOP Principles and SWOT Analysis for the classes comprising the following four subsystems:
-- User management 
-- Library management
-- Last.fm integration
-- Administrator features
+  - User management 
+  - Library management
+  - Last.fm integration
+  - Administrator features
 
 2. Identified software design smells, and the corresponding code smells for each subsystem. Tools used: SonarQube, Designite.
 
